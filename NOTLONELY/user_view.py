@@ -88,11 +88,13 @@ def login(request):
                 request.session['username'] = username_POST
                 responsedata['status'] = '0'
                 responsedata['msg']  = '登陆成功'
-                responsedata['nickname'] = user.nickname
+                responsedata['id'] = user.id
+		responsedata['nickname'] = user.nickname
                 responsedata['username'] = user.username
 		responsedata['avatar'] = user.avatar.url
 	        responsedata['sex'] = user.sex
 	 	responsedata['phone'] = user.qq
+		responsedata['session_id'] = request.session.session_key
             else:
                 responsedata['status'] = '300'
                 responsedata['msg'] = '密码错误'
