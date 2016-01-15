@@ -94,7 +94,7 @@ def login(request):
 		responsedata['avatar'] = user.avatar.url
 	        responsedata['sex'] = user.sex
 	 	responsedata['phone'] = user.qq
-		responsedata['session_id'] = request.session.session_key
+		responsedata['session_id'] = request.session.get('session_key')
             else:
                 responsedata['status'] = '300'
                 responsedata['msg'] = '密码错误'
