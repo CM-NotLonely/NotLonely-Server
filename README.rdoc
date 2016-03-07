@@ -1,28 +1,9 @@
-== README
+### NotLonely
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# 这款项目是我接手创萌工作室之后的第一个尝试的项目，也算是练手的一个项目
 
-Things you may want to cover:
+# 旨在让成电人可以更好的在某一个兴趣领域找到志同道合的人
 
-* Ruby version
+# 祝玩的开心
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+> 我们决定从项目开始就开源~~希望大家多多支持~
