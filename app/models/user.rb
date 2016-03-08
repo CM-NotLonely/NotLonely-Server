@@ -9,4 +9,5 @@ class User < ActiveRecord::Base
 	has_many :user_followeds, :class_name => 'Follow', :foreign_key => 'user_followed_id'
 	has_many :group_invites, :class_name => 'Group', :foreign_key => 'group_invite_id'
 	has_many :group_inviteds, :class_name => 'Group', :foreign_key => 'group_invited_id'
+	mount_uploader :avatar, AvatarUploader
 end

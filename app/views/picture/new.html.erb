@@ -1,0 +1,12 @@
+<h1>Picture#new</h1>
+<p>Find me in app/views/picture/new.html.erb</p>
+
+
+<%= form_for :user, url: picture_create_path, method: :post do |f| %>
+  <div class="field">
+    <%= f.file_field :avatar %>
+    <%= f.hidden_field :avatar_cache %>
+    <%= f.submit "FINISH" %>
+  </div>
+<%end%>
+

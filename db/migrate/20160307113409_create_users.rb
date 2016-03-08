@@ -3,7 +3,6 @@ class CreateUsers < ActiveRecord::Migration
     create_table :users do |t|
       t.string :uestc_account
       t.boolean :isverify
-      t.string :headimg
       t.string :nickname
       t.boolean :sex
       t.text :introduction
