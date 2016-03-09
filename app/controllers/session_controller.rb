@@ -17,6 +17,7 @@ class SessionController < ApplicationController
 		session[:user_id] = nil
 		render json: {code: 0}
 	end
+	#设置参数白名单。
 	private
 		def params_user
 			params.permit(:username, :password)

@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
 	has_many :group_invites, :class_name => 'Group', :foreign_key => 'group_invite_id'
 	has_many :group_inviteds, :class_name => 'Group', :foreign_key => 'group_invited_id'
 	mount_uploader :avatar, AvatarUploader
+	#设置用户表中的数据要求。
 	validates :username, uniqueness: true, length: { in: 5..10 }
 	validates :password, length: { minimum: 6 }
 end
