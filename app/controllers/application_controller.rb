@@ -11,4 +11,11 @@ class ApplicationController < ActionController::Base
   			render json: {code: 3001}
   		end
   	end
+
+    # def update_object(j,k)
+    #   for i in 0..j.size
+    #     j[i] = k[i]
+    #   end
+    #   return j
+    # end
 end

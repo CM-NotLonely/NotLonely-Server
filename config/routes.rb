@@ -2,9 +2,15 @@ Rails.application.routes.draw do
     # get 'picture/new' => 'picture#new'
     # post 'picture/create' => 'picture#create'
     # get 'picture/show' => 'picture#show'
-    resources :user
+    #修改了资源式路径，减少了不必要的请求参数。
+    controller :user do
+      get 'show'
+      post 'create'
+      post 'update'
+    end
 
-    resources :session
+    post 'session/create' => 'session#create'
+    get 'session/destroy' => 'session#destroy'
 
     resources :groups
 
