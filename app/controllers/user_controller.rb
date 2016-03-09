@@ -1,4 +1,6 @@
 class UserController < ApplicationController
+	#注册账户的动作跳过过滤器。
+	skip_before_action :identify, only: [:create]
 	def create
 		@user = User.new(params_user)
 		@user.avatar = params[:file]
