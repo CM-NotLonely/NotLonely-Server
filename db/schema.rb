@@ -72,15 +72,6 @@ ActiveRecord::Schema.define(version: 20160308105920) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "pictures", force: :cascade do |t|
-    t.binary   "data"
-    t.string   "content_type"
-    t.string   "name"
-    t.integer  "user_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
   create_table "users", force: :cascade do |t|
     t.string   "username"
     t.string   "password"
