@@ -82,13 +82,13 @@ ActiveRecord::Schema.define(version: 20160308105920) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "uestc_account"
-    t.boolean  "isverify"
+    t.string   "username"
+    t.string   "password"
     t.string   "nickname"
     t.boolean  "sex"
     t.text     "introduction"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "avatar"
   end
 
