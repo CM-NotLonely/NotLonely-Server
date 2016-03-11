@@ -34,6 +34,9 @@ Rails.application.routes.draw do
       end
     end
 
+  match '/groups', to: 'groups#index2', via: 'get' # added by msl
+  match '/group', to: 'groups#index', via: 'get' # added by msl
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
