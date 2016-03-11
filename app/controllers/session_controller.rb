@@ -3,9 +3,9 @@ class SessionController < ApplicationController
 	skip_before_action :identify, only: [:create]
 	#用户登录验证，验证通过后建立session。
 	def create
-		@user = User.where(params_user)
+		@user = User.find_by(params_user)
 		if @user
-			session[:user_id] = @user.ids
+			session[:user_id] = @user.id
 			render json: {code: 0, user: @user}
 		else
 			render json: {code: 3001}

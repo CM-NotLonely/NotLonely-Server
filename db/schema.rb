@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20160309135422) do
   create_table "activity_applies", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "activity_id"
-    t.boolean  "isagree"
+    t.integer  "isagree"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -43,15 +43,15 @@ ActiveRecord::Schema.define(version: 20160309135422) do
   create_table "group_applies", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "group_id"
-    t.boolean  "isagree"
+    t.integer  "isagree"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "group_invites", force: :cascade do |t|
-    t.integer  "user_invite_id"
+    t.integer  "group_id"
     t.integer  "user_invited_id"
-    t.boolean  "isagree"
+    t.integer  "isagree"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end

@@ -3,7 +3,7 @@ class CreateActivityApplies < ActiveRecord::Migration
     create_table :activity_applies do |t|
       t.integer :user_id
       t.integer :activity_id
-      t.boolean :isagree
+      t.integer :isagree
 
       t.timestamps null: false
     end

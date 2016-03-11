@@ -48,7 +48,9 @@ class UserController < ApplicationController
 		end
 
 		def set_user
-			@user = User.find_by(id: session[:user_id])
+			unless @user
+				@user = User.find_by(id: session[:user_id])
+			end
 		end
 end
 

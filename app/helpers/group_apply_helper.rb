@@ -1,0 +1,2 @@
+module GroupApplyHelper
+end

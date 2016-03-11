@@ -14,7 +14,25 @@ Rails.application.routes.draw do
 
     resources :groups do # added by msl
       resources :activities # added by msl
-  end # added by msl
+    end # added by msl
+
+    resources :group_apply do
+      member do
+        get 'sub_index'
+      end
+    end
+
+    resources :group_invite do
+      member do
+        get 'sub_index'
+      end
+    end
+    
+    resources :activity_apply do
+      member do
+        get 'sub_index'
+      end
+    end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

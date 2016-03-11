@@ -13,7 +13,7 @@ class GroupsController < ApplicationController
 	end
 	
 	#查看所有用户创建的所有圈子。
-	def
+	def sub_index
 	
 	end
 	
@@ -59,15 +59,13 @@ class GroupsController < ApplicationController
 	end
 
 	private
-	def group_params
-		params.permit(:title, :introduction, :avatar)
-
-	end
-	
-	#增加一个判断，只有当@user为空时才去查找已登录用户的信息。
-	def set_user
-		unless @user
-			@user = User.find_by(id: session[:user_id])
+		def group_params
+			params.permit(:title, :introduction, :avatar, :id)
 		end
-	end
+	
+		def set_user
+			if @user.nil?
+				@user = User.find_by(id: session[:user_id])
+			end
+		end
 end
