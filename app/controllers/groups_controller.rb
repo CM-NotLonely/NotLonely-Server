@@ -13,8 +13,13 @@ class GroupsController < ApplicationController
 	end
 	
 	#查看所有用户创建的所有圈子。
-	def
-	
+	def index2
+		@groups=Group.all
+		if @groups
+			render json: {code: 0, groups: @groups}
+		else
+			render json: {code: 3001}
+		end
 	end
 	
 
