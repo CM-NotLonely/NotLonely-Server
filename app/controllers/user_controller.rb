@@ -2,12 +2,8 @@ class UserController < ApplicationController
 	#注册账户的动作跳过过滤器。
 	skip_before_action :identify, only: [:create]
 	#设置前置过滤器，首先确定user。
-<<<<<<< HEAD
 	before_action :set_user, only: [:show, :update]
-=======
-	before_action :set_user, only: [:show]
 
->>>>>>> e4f2c32faada5839f01361076643d08dac38afb8
 	def create
 		@user = User.new(params_user)
 		@user.avatar = params[:file]
