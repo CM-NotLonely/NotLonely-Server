@@ -12,7 +12,9 @@ Rails.application.routes.draw do
     post 'session/create' => 'session#create'
     get 'session/destroy' => 'session#destroy'
 
-    resources :groups
+    resources :groups do # added by msl
+      resources :activities # added by msl
+  end # added by msl
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
