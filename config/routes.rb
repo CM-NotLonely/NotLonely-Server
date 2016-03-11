@@ -2,9 +2,22 @@ Rails.application.routes.draw do
     # get 'picture/new' => 'picture#new'
     # post 'picture/create' => 'picture#create'
     # get 'picture/show' => 'picture#show'
-    resources :user
+    #修改了资源式路径，减少了不必要的请求参数。
+    controller :user do
+      get 'show'
+      post 'create'
+      post 'update'
+    end
 
-    resources :session
+    post 'session/create' => 'session#create'
+    get 'session/destroy' => 'session#destroy'
+
+    resources :groups do # added by msl
+      resources :activities # added by msl
+  end # added by msl
+
+  match '/groups', to: 'groups#index2', via: 'get' # added by msl
+  match '/group', to: 'groups#index', via: 'get' # added by msl
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
