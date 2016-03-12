@@ -23,6 +23,21 @@ class FollowController < ApplicationController
 		end
 	end
 
+	# 登录用户所有关注的人。
+	def index
+		@follows = Follow.select(:user_followed_id).where(user_follow_id: @user.id)
+		if @follows
+			@users = User.where(id: @follows)
+			if @users
+				render json: {code: 0, users: @users}
+			else
+				render json: {code: 3001}
+			end
+		else
+			render json: {code: 3001}
+		end
+	end
+
 	private
 		def set_user
 			@user = User.find_by(id: session[:user_id])
