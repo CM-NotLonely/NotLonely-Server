@@ -13,7 +13,7 @@ class GroupApplyController < ApplicationController
 	# 返回登录用户的所有被申请加入的圈子的列表。
 	def index
 		@groups = @user.groups
-		@group_applies = GroupApply.where(group_id: @groups.ids,isagree: false)
+		@group_applies = GroupApply.where(group_id: @groups.ids,isagree: 0)
 		if @group_applies
 			render json: {code: 0, group_applies: @group_applies}
 		else
@@ -47,7 +47,7 @@ class GroupApplyController < ApplicationController
 
 	# 显示用户已经申请加入的圈子。
 	def sub_index
-		@group_applies = GroupApply.select(:group_id).where(user_id: @user.id, isagree: true)
+		@group_applies = GroupApply.select(:group_id).where(user_id: @user.id, isagree: 2)
 		if @group_applies
 			@groups = Group.where(id: @group_applies)
 			render json: {code: 0, groups: @groups}

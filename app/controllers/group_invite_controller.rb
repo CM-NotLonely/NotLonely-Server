@@ -4,7 +4,7 @@ class GroupInviteController < ApplicationController
 	# 登录用户申请邀请某人加入某个指定的圈子。
 	def create
 		@group_invite = GroupInvite.new(params_group_invite) 
-		@group_invite.user_invite_id = session[:user_id]
+		@group_invite.group_id = params[:group_id]
 		@group_invite.user_invited_id = params[:user_invited_id]
 		@group_invite.isagree = 0
 		@group_invite.save
@@ -13,7 +13,7 @@ class GroupInviteController < ApplicationController
 
 	# 返回登录用户的所有被邀请加入的圈子的列表。
 	def index
-		@group_invites = GroupInvite.where(user_invited_id: @user.id, isagree: false)
+		@group_invites = GroupInvite.where(user_invited_id: @user.id, isagree: 0)
 		if @group_invites
 			render json: {code: 0, group_invites: @group_invites}
 		else
@@ -37,9 +37,10 @@ class GroupInviteController < ApplicationController
 
 	# 某一圈子邀请的详情。
 	def show
-		@group_invite = GroupInvite.find(params[:id])
-		if @group_invite
-			render json: {code: 0, group_invite: @group_invite}
+		@group_invite = GroupInvite.find_by(id: params[:id])
+		@group = Group.find(@group_invite.group_id)
+		if @group
+			render json: {code: 0, group: @group}
 		else
 			render json: {code: 3001}
 		end
@@ -47,7 +48,7 @@ class GroupInviteController < ApplicationController
 
 	# 显示用户已经被邀请加入的圈子。
 	def sub_index
-		@group_invites = GroupInvite.select(:group_id).where(user_invited_id: @user.id, isagree: true)
+		@group_invites = GroupInvite.select(:group_id).where(user_invited_id: @user.id, isagree: 2)
 		if @group_invites
 			@groups = Group.where(id: @group_invites)
 			render json: {code: 0, groups: @groups}

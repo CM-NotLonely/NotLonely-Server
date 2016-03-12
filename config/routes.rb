@@ -36,9 +36,12 @@ Rails.application.routes.draw do
       end
     end
 
-  match '/groups', to: 'groups#index2', via: 'get' # added by msl
-  match '/group', to: 'groups#index', via: 'get' # added by msl
-  match '/groups/:group_id/activities/:activity_id/likes', to: 'likes#destroy', via: 'delete' # added by msl
+    match '/groups', to: 'groups#index2', via: 'get' # added by msl
+    match '/group', to: 'groups#index', via: 'get' # added by msl
+    match '/groups/:group_id/activities/:activity_id/likes', to: 'likes#destroy', via: 'delete' # added by msl
+
+    post 'follow/create/:user_followed_id' => 'follow#create'
+    delete 'follow/destroy/:id' => 'follow#destroy' 
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

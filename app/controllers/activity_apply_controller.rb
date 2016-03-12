@@ -13,7 +13,7 @@ class ActivityApplyController < ApplicationController
 	# 返回登录用户的所有被申请加入的活动的列表。
 	def index
 		@activities = @user.activities
-		@activity_applies = ActivityApply.where(id: @activities.ids,isagree: false)
+		@activity_applies = ActivityApply.where(id: @activities.ids,isagree: 0)
 		if @activity_applies
 			render json: {code: 0, activity_applies: @activity_applies}
 		else
@@ -47,7 +47,7 @@ class ActivityApplyController < ApplicationController
 
 	# 显示用户已经加入的活动。
 	def sub_index
-		@activity_applies = ActivityApply.select(:activity_id).where(user_id: @user.id, isagree: true)
+		@activity_applies = ActivityApply.select(:activity_id).where(user_id: @user.id, isagree: 2)
 		if @activity_applies
 			@activities = Activity.where(id: @activity_applies)
 			render json: {code: 0, activities: @activities}
