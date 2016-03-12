@@ -1,7 +1,7 @@
 class UserController < ApplicationController
 	#注册账户的动作跳过过滤器。
 	skip_before_action :identify, only: [:create]
-	#设置前置过滤器，首先确定user。
+	# #设置前置过滤器，首先确定user。
 	before_action :set_user, only: [:show, :update]
 
 	def create
@@ -47,10 +47,8 @@ class UserController < ApplicationController
 			params.permit(:password, :nickname, :sex, :introduction, :avatar)
 		end
 
-		def set_user
-			unless @user
-				@user = User.find_by(id: session[:user_id])
-			end
-		end
+		 def set_user
+			@user = get_cache	
+		 end
 end
 

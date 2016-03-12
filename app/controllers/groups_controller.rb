@@ -70,7 +70,7 @@ class GroupsController < ApplicationController
 	
 		def set_user
 			if @user.nil?
-				@user = User.find_by(id: session[:user_id])
+				@user = get_cache
 			end
 		end
 end

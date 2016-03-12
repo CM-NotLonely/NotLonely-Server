@@ -68,6 +68,6 @@ class GroupInviteController < ApplicationController
 		end
 
 		def set_group_invites
-			@user = User.find_by(id: session[:user_id])
+			@user = get_cache
 		end
 end

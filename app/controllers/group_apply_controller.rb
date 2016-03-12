@@ -67,6 +67,6 @@ class GroupApplyController < ApplicationController
 		end
 
 		def set_group_applies
-			@user = User.find_by(id: session[:user_id])
+			@user = get_cache
 		end
 end

@@ -67,6 +67,6 @@ class ActivityApplyController < ApplicationController
 		end
 
 		def set_activity_applies
-			@user = User.find_by(id: session[:user_id])
+			@user = get_cache
 		end
 end
