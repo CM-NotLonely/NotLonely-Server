@@ -13,7 +13,9 @@ Rails.application.routes.draw do
     get 'session/destroy' => 'session#destroy'
 
     resources :groups do # added by msl
-      resources :activities # added by msl
+      resources :activities do # added by msl
+        resources :likes # added by msl
+      end # added by msl
     end # added by msl
 
     resources :group_apply do
@@ -36,6 +38,7 @@ Rails.application.routes.draw do
 
   match '/groups', to: 'groups#index2', via: 'get' # added by msl
   match '/group', to: 'groups#index', via: 'get' # added by msl
+  match '/groups/:group_id/activities/:activity_id/likes', to: 'likes#destroy', via: 'delete' # added by msl
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
