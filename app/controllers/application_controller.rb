@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   # protect_from_forgery with: :exception
   #增加控制器的过滤器，只有当建立session后，才允许执行敏感动作。
-  before_action :identify, :get_cache
+  before_action :identify, :cache_key
 
   protected
   	def identify
@@ -23,10 +23,4 @@ class ApplicationController < ActionController::Base
     end
   end
 
-    # def update_object(j,k)
-    #   for i in 0..j.size
-    #     j[i] = k[i]
-    #   end
-    #   return j
-    # end
 end

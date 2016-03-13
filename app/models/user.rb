@@ -24,4 +24,43 @@ class User < ActiveRecord::Base
 	# 	end
 	# end
 
+	# after_update :cache_key, :write_key
+
+
+	# 	def cache_key
+	# 		cache_key = "#{write_key_real}"
+	# 	end
+
+	# 	def write_key_real
+	# 		User.select(:id, :updated_at).where(id: session[:user_id]).try(:utc).try(:to_s, :number)
+	# 	end
+	# 	def write_value
+	# 		User.find_by(id: session[:user_id])
+	# 	end
+
+	# 	def write_key
+	# 		Rails.cache.write("#{cache_key}","#{write_value}")
+	# 	end
+
+	# 	def get_cache
+	# 		Rails.cache.read(cache_key)
+	# 	end
+	# def cache_key
+ #      cache_key = "#{write_key_real}"
+ #    end
+
+ #    def write_key_real
+ #      User.select(:id, :updated_at).where(id: session[:user_id]).try(:utc).try(:to_s, :number)
+ #    end
+ #    def write_value
+ #      User.find_by(id: session[:user_id])
+ #    end
+
+ #    def write_key
+ #      Rails.cache.write(cache_key,write_value)
+ #    end
+
+    # def get_cache
+    #   Rails.cache.read(User.cache_key)
+    # end
 end
