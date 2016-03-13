@@ -23,10 +23,4 @@ class ApplicationController < ActionController::Base
     end
   end
 
-    # def update_object(j,k)
-    #   for i in 0..j.size
-    #     j[i] = k[i]
-    #   end
-    #   return j
-    # end
 end

@@ -3,17 +3,9 @@ class UserController < ApplicationController
 	skip_before_action :identify, only: [:create]
 	# #设置前置过滤器，首先确定user。
 	before_action :set_user, only: [:show, :update]
-
 	def create
 		@user = User.new(params_user)
 		@user.avatar = params[:file]
-     	# @user.username = params[:user][:username]
-      # 	@user.password = params[:user][:password]
-      # 	@user.sex = params[:user][:sex]
-      # 	@user.introduction = params[:user][:introduction]
-      # 	@user.nickname = params[:user][:nickname]
-		#@user = User.new(params_user)
-		#@user.avatar = params[:file]
 			if @user.save
 				render json: {code: 0, user: @user}
 			else
