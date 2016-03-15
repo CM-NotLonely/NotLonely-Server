@@ -67,6 +67,6 @@ class GroupApplyController < ApplicationController
 		end
 
 		def set_group_applies
-			@user = get_cache
+			@user = User.read_cache
 		end
 end

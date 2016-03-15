@@ -40,7 +40,7 @@ class UserController < ApplicationController
 		end
 
 		 def set_user
-			@user = get_cache	
+			@user = User.read_cache	
 		 end
 end
 

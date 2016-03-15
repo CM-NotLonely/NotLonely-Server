@@ -1,7 +1,7 @@
 class ActivitiesController < ApplicationController
 	#在某个圈子里面创建活动。
 	def create
-		@user = User.find_by(id: session[:user_id])
+		@user = User.read_cache
 		@group = Group.find(params[:group_id])
 		@activity = @group.activities.new(activity_params) # this line can be better!
 		@activity.user_id = @user.id

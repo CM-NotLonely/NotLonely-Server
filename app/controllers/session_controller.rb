@@ -5,6 +5,8 @@ class SessionController < ApplicationController
 	def create
 		@user = User.find_by(params_user)
 		if @user
+			@user.cache_key
+			@user.write_cache
 			session[:user_id] = @user.id
 			render json: {code: 0, user: @user}
 		else
@@ -14,6 +16,8 @@ class SessionController < ApplicationController
 	
 	#用户请求退出，触发后删除session。
 	def destroy
+		@user = User.find_by(id: session[:user_id])
+		@user.cache_delete
 		session[:user_id] = nil
 		render json: {code: 0}
 	end

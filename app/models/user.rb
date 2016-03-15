@@ -13,54 +13,26 @@ class User < ActiveRecord::Base
 	validates :username, uniqueness: true, length: { in: 5..10 }
 	validates :password, length: { minimum: 6 }
 
-	# # 增加缓存，过期时间为10minitues。
-	# def cache_key
-	# 	@user = User.select(:id, :updated_at).where(id: session[:user_id]).try(:utc).try(:to_s, :number)
-	# 	cache_key = "Users/#{@user}"
-	# end
-	# def get_cache
-	# 	rails.cache.fetch("#{cache_key}", expires_in: 10.minitues) do
-	# 		Application::API.find_by(id: session[:user_id])
-	# 	end
-	# end
+	# 增添回调，当更新用户时生成cache，登录后，生成cache，退出后删除cache。
+	before_destroy :cache_delete
 
-	# after_update :cache_key, :write_key
+	after_update :write_cache, :cache_key
 
+		def cache_key
+			"User/#{self.id}/#{self.updated_at.to_i}"
+		end
 
-	# 	def cache_key
-	# 		cache_key = "#{write_key_real}"
-	# 	end
+		def write_cache
+			Rails.cache.fetch(:cache_key) do
+				self
+			end
+		end
 
-	# 	def write_key_real
-	# 		User.select(:id, :updated_at).where(id: session[:user_id]).try(:utc).try(:to_s, :number)
-	# 	end
-	# 	def write_value
-	# 		User.find_by(id: session[:user_id])
-	# 	end
+		def self.read_cache
+			Rails.cache.fetch(:cache_key)
+		end
 
-	# 	def write_key
-	# 		Rails.cache.write("#{cache_key}","#{write_value}")
-	# 	end
-
-	# 	def get_cache
-	# 		Rails.cache.read(cache_key)
-	# 	end
-	# def cache_key
- #      cache_key = "#{write_key_real}"
- #    end
-
- #    def write_key_real
- #      User.select(:id, :updated_at).where(id: session[:user_id]).try(:utc).try(:to_s, :number)
- #    end
- #    def write_value
- #      User.find_by(id: session[:user_id])
- #    end
-
- #    def write_key
- #      Rails.cache.write(cache_key,write_value)
- #    end
-
-    # def get_cache
-    #   Rails.cache.read(User.cache_key)
-    # end
+		def cache_delete
+			Rails.cache.delete(:cache_key)
+		end
 end

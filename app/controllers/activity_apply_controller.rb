@@ -67,6 +67,6 @@ class ActivityApplyController < ApplicationController
 		end
 
 		def set_activity_applies
-			@user = get_cache
+			@user = User.read_cache
 		end
 end

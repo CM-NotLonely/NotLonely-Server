@@ -70,7 +70,7 @@ class GroupsController < ApplicationController
 	
 		def set_user
 			if @user.nil?
-				@user = get_cache
+				@user = User.read_cache
 			end
 		end
 end

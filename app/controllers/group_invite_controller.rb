@@ -68,6 +68,6 @@ class GroupInviteController < ApplicationController
 		end
 
 		def set_group_invites
-			@user = get_cache
+			@user = User.read_cache
 		end
 end
