@@ -4,13 +4,10 @@ class LikesController < ApplicationController
 		activity = Activity.find(params[:activity_id])
 		like = activity.likes.new
 		like.user_id = session[:user_id]
-		user=User.find_by(id: session[:user_id])
-		if user.likes.find_by(activity_id: activity.id)
-			render json: {code: 3001, message: '不能重复点赞'}
-		elsif like.save
+		if like.save
 			render json: {code: 0, like: like}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, message: '不要重复点赞'}
 		end
 	end
 
