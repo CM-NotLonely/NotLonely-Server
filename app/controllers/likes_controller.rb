@@ -1,5 +1,5 @@
 class LikesController < ApplicationController
-	#点赞
+	#点赞，我觉得用数据库来检验是否重复点赞比较好些
 	def create
 		activity = Activity.find(params[:activity_id])
 		like = activity.likes.new
@@ -7,7 +7,7 @@ class LikesController < ApplicationController
 		if like.save
 			render json: {code: 0, like: like}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, message: '不要重复点赞'}
 		end
 	end
 

@@ -63,6 +63,45 @@ class GroupsController < ApplicationController
 		end
 	end
 
+	#显示赞数高的前十个圈子
+	def index3
+		like_counts=Array.new(0, Group.count)
+		for i in 1..Group.count
+			num=0
+			Group.find(i).activities.all.each do |a|
+				num+=a.likes.count
+			end
+			like_counts[i]=num
+		end
+
+		temp=Array.new like_counts
+
+		t=0
+		for i in 1..Group.count-1
+			for j in 1..Group.count-i-1
+				if like_counts[j]<like_counts[j+1]
+					t=like_counts[j]
+					like_counts[j]=like_counts[j+1]
+					like_counts[j+1]=t
+				end
+			end
+		end
+
+		groups=[]
+		for i in 1..Group.count
+			for j in 1..Group.count
+				if like_counts[i]==temp[j]
+					break
+				end
+			end
+			group=Group.find(j)
+			groups[i]=group
+		end
+		groups=groups.first 10
+
+		render json: {groups: groups}
+	end
+
 	private
 		def group_params
 			params.permit(:title, :introduction, :avatar, :id)
