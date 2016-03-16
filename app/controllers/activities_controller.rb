@@ -8,7 +8,7 @@ class ActivitiesController < ApplicationController
 		if @activity.save
 			render json: {code: 0, activity: @activity}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: '创建活动失败'}
 		end
 	end
 	
@@ -18,7 +18,7 @@ class ActivitiesController < ApplicationController
 		if @activity
 		    render json: {code: 0, activity: @activity}
 		else
-		    render json: {code: 3001}
+		    render json: {code: 3001, msg: '显示活动失败'}
 		end
 	end
 	
@@ -29,7 +29,7 @@ class ActivitiesController < ApplicationController
 		if @activities
 			render json: {code: 0, activities: @activities}
 		else
-			render json: {code:3001}
+			render json: {code:3001, msg: '显示该圈子的所有活动失败'}
 		end
 	end
 	
@@ -40,7 +40,7 @@ class ActivitiesController < ApplicationController
 			@activity.destroy
 			render json: {code: 0}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: '删除该活动失败'}
 		end
 	end
 	
@@ -51,10 +51,10 @@ class ActivitiesController < ApplicationController
 			if @activity.update(activity_params)
 				render json: {code: 0, activity: @activity}
 			else
-				render json: {code: 3001}
+				render json: {code: 3001, msg: '更新失败'}
 			end
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msh: '非本人没有权限修改该用户资料'}
 		end
 	end
 

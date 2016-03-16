@@ -8,7 +8,7 @@ class GroupsController < ApplicationController
 		if @group.save
 			render json: {code: 0, group: @group}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: '创建圈子失败'}
 		end
 	end
 	
@@ -18,7 +18,7 @@ class GroupsController < ApplicationController
 		if @groups
 			render json: {code: 0, groups: @groups}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: '查看所有用户创建的所有圈子失败'}
 		end
 	end
 	
@@ -29,7 +29,7 @@ class GroupsController < ApplicationController
 		if @group
 		    render json: {code: 0, group: @group}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: '查看某用户某指定的圈子失败'}
 		end
 	end
 	
@@ -39,7 +39,7 @@ class GroupsController < ApplicationController
 		if @group.update(group_params)
 			render json: {code: 0, group: @group}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: '更新某圈子失败'}
 		end
 	end
 	
@@ -49,7 +49,7 @@ class GroupsController < ApplicationController
 		if @group.destroy
 			render json: {code: 0}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: '删除某圈子失败'}
 		end
 	end
 	
@@ -59,16 +59,18 @@ class GroupsController < ApplicationController
 		if @groups
 			render json: {code: 0, groups: @groups}
 		else
-			render json: {code:3001}
+			render json: {code:3001, msg: '查看某用户的所有圈子失败'}
 		end
 	end
 
 	#显示赞数高的前十个圈子，优化了点性能
 	def index3
-		activities=Activity.all
 		count=Group.count
 		like_counts=Array.new(0, count)
 		groupss=Group.all
+		if groupss.empty?
+			return render json: {code: 3001, msg: '显示赞数高的前十个圈子失败，因为圈子为空'}
+		end
 		for i in 1..count
 			num=0
 			groupss.find(i).activities.all.each do |a|
