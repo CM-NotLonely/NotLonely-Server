@@ -63,12 +63,15 @@ class GroupsController < ApplicationController
 		end
 	end
 
-	#显示赞数高的前十个圈子
+	#显示赞数高的前十个圈子，优化了点性能
 	def index3
-		like_counts=Array.new(0, Group.count)
-		for i in 1..Group.count
+		activities=Activity.all
+		count=Group.count
+		like_counts=Array.new(0, count)
+		groupss=Group.all
+		for i in 1..count
 			num=0
-			Group.find(i).activities.all.each do |a|
+			groupss.find(i).activities.all.each do |a|
 				num+=a.likes.count
 			end
 			like_counts[i]=num
@@ -77,8 +80,8 @@ class GroupsController < ApplicationController
 		temp=Array.new like_counts
 
 		t=0
-		for i in 1..Group.count-1
-			for j in 1..Group.count-i-1
+		for i in 1..count-1
+			for j in 1..count-i-1
 				if like_counts[j]<like_counts[j+1]
 					t=like_counts[j]
 					like_counts[j]=like_counts[j+1]
@@ -88,13 +91,14 @@ class GroupsController < ApplicationController
 		end
 
 		groups=[]
-		for i in 1..Group.count
-			for j in 1..Group.count
+		for i in 1..count
+			for j in 1..count
 				if like_counts[i]==temp[j]
+					temp[j]=-1
 					break
 				end
 			end
-			group=Group.find(j)
+			group=groupss.find(j)
 			groups[i]=group
 		end
 		groups=groups.first 10
