@@ -43,7 +43,8 @@ Rails.application.routes.draw do
     match '/top10_groups', to: 'groups#index3', via: 'get' # added by msl
 
     post 'follow/create/:user_followed_id' => 'follow#create'
-    delete 'follow/destroy/:id' => 'follow#destroy' 
+    get 'follow/destroy/:id' => 'follow#destroy' 
+    get 'follow/index' => 'follow#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

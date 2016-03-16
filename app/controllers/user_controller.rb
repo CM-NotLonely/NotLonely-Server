@@ -24,7 +24,7 @@ class UserController < ApplicationController
 	def update
 		@user.avatar = params[:file]
 		if @user.update(params_user_need)
-			render json: {code: 0, user: @user}
+			render json: {code: 0}
 		else
 			render json: {code: 3001}
 		end

@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 	# 增添回调，当更新用户时生成cache，登录后，生成cache，退出后删除cache。
 	before_destroy :cache_delete
 
-	after_update :write_cache, :cache_key
+	after_update :cache_delete, :write_cache, :cache_key
 
 		def cache_key
 			"User/#{self.id}/#{self.updated_at.to_i}"
