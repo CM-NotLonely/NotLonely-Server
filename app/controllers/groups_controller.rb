@@ -63,6 +63,7 @@ class GroupsController < ApplicationController
 		end
 	end
 
+	%>
 	#显示赞数高的前十个圈子，优化了点性能
 	def index3
 		count=Group.count
@@ -105,6 +106,16 @@ class GroupsController < ApplicationController
 		end
 		groups=groups.first 10
 
+		render json: {groups: groups}
+	end
+	%>
+
+	#显示赞数高的前十个圈子，强力优化性能
+	def index3
+		if Group.all.empty?
+			return render json: {code: 3001, msg: '显示赞数高的前十个圈子失败，因为圈子为空'}
+		end
+		groups=(Group.order 'likes_count DESC').limit(10)
 		render json: {groups: groups}
 	end
 

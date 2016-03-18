@@ -58,6 +58,15 @@ class ActivitiesController < ApplicationController
 		end
 	end
 
+	#显示赞数前10的活动
+	def index2
+		if Activity.all.empty?
+			return render json: {code: 3001, msg: '活动为空'}
+		end
+		activities=(Activity.order 'likes_count DESC').limit 10
+		render json: {code: 0, activities: activities}
+	end
+
 	private
 	def activity_params
 		params.permit(:title, :location, :cost, :detail, :time)

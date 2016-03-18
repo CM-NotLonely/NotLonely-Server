@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160309135422) do
+ActiveRecord::Schema.define(version: 20160318041523) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id"
@@ -21,8 +21,9 @@ ActiveRecord::Schema.define(version: 20160309135422) do
     t.string   "cost"
     t.text     "detail"
     t.datetime "time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "likes_count", default: 0
   end
 
   create_table "activity_applies", force: :cascade do |t|
@@ -61,9 +62,10 @@ ActiveRecord::Schema.define(version: 20160309135422) do
     t.text     "introduction"
     t.string   "headimg"
     t.integer  "user_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.string   "avatar"
+    t.integer  "likes_count",  default: 0
   end
 
   create_table "likes", force: :cascade do |t|
