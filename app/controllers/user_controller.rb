@@ -7,9 +7,9 @@ class UserController < ApplicationController
 		@user = User.new(params_user)
 		@user.avatar = params[:file]
 			if @user.save
-				render json: {code: 0, user: @user}
+				render json: {code: 0, msg: "注册成功。", user: @user}
 			else
-				render json: {code: 3001}
+				render json: {code: 3001, msg: "此用户已存在或只能上传jpg/png等格式的头像。"}
 			end
 	end
 
@@ -17,16 +17,16 @@ class UserController < ApplicationController
 		if @user
 		    render json: {code: 0, user: @user}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: "请先登录"}
 		end
 	end
 
 	def update
 		@user.avatar = params[:file]
 		if @user.update(params_user_need)
-			render json: {code: 0}
+			render json: {code: 0, msg: "更改个人信息成功", user: @user}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: "更改个人信息失败,"}
 		end
 	end
 
