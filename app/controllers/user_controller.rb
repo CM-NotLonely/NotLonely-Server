@@ -17,7 +17,7 @@ class UserController < ApplicationController
 		if @user
 		    render json: {code: 0, user: @user}
 		else
-			render json: {code: 3001, msg: "请先登录"}
+			render json: {code: 3001}
 		end
 	end
 

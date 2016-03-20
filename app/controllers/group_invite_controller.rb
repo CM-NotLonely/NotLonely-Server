@@ -8,7 +8,7 @@ class GroupInviteController < ApplicationController
 		@group_invite.user_invited_id = params[:user_invited_id]
 		@group_invite.isagree = 0
 		@group_invite.save
-		render json: {code: 0, group_invite: @group_invite}
+		render json: {code: 0, msg: "申请发送成功", group_invite: @group_invite}
 	end
 
 	# 返回登录用户的所有被邀请加入的圈子的列表。
@@ -17,7 +17,7 @@ class GroupInviteController < ApplicationController
 		if @group_invites
 			render json: {code: 0, group_invites: @group_invites}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: "你还没有加入任何一个圈子"}
 		end
 	end
 
@@ -28,10 +28,10 @@ class GroupInviteController < ApplicationController
 			if @group_invite.update(params_isagree)
 				render json: {code: 0, group_invite: @group_invite}
 			else
-				render json: {code: 3001}
+				render json: {code: 3001, msg: "回复失败，可能是没有明确回复是否同意"}
 			end
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: "孩子，你又在调皮了"}
 		end
 	end
 
@@ -53,7 +53,7 @@ class GroupInviteController < ApplicationController
 			@groups = Group.where(id: @group_invites)
 			render json: {code: 0, groups: @groups}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: "你尚未加入任何一个圈子"}
 		end
 	end
 

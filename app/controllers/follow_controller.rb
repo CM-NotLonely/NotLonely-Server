@@ -7,9 +7,9 @@ class FollowController < ApplicationController
 		@follow.user_follow_id = @user.id
 		@follow.user_followed_id = params[:user_followed_id]
 		if @follow.save
-			render json: {code: 0, follow: @follow}		
+			render json: {code: 0, msg: "关注成功", follow: @follow}		
 		else
-			render json: {code: 3001}		
+			render json: {code: 3001, msg: "关注失败，可能是对方设置了禁止关注"}		
 		end		
 	end
 
@@ -17,9 +17,9 @@ class FollowController < ApplicationController
 	def destroy
 		@follow = Follow.where(user_follow_id: @user.id, id: params[:id]).take
 		if @follow.destroy
-			render json: {code: 0}
+			render json: {code: 0, msg: "取消关注成功"}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: "取消关注失败"}
 		end
 	end
 
@@ -31,10 +31,10 @@ class FollowController < ApplicationController
 			if @users != []
 				render json: {code: 0, users: @users}
 			else
-				render json: {code: 3001}
+				render json: {code: 3001, msg: "你的关注人清单是0哦"}
 			end
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: "你的关注人清单是0哦"}
 		end
 	end
 

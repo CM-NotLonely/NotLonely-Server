@@ -7,7 +7,7 @@ class GroupApplyController < ApplicationController
 		@group_apply.user_id = session[:user_id]
 		@group_apply.isagree = 0
 		@group_apply.save
-		render json: {code: 0, group_apply: @group_apply}
+		render json: {code: 0, msg: "申请成功，等待对方回复中", group_apply: @group_apply}
 	end
 
 	# 返回登录用户的所有被申请加入的圈子的列表。
@@ -17,7 +17,7 @@ class GroupApplyController < ApplicationController
 		if @group_applies
 			render json: {code: 0, group_applies: @group_applies}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: "尚未收到任何申请哦"}
 		end
 	end
 
@@ -28,10 +28,10 @@ class GroupApplyController < ApplicationController
 			if @group_apply.update(params_isagree)
 				render json: {code: 0, group_apply: @group_apply}
 			else
-				render json: {code: 3001}
+				render json: {code: 3001, msg: "回复失败，可能是你没有明确回复是否同意"}
 			end
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: "孩子，不要再迷失方向了"}
 		end
 	end
 
@@ -52,7 +52,7 @@ class GroupApplyController < ApplicationController
 			@groups = Group.where(id: @group_applies)
 			render json: {code: 0, groups: @groups}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: "尚未加入任何圈子"}
 		end
 	end
 

@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   protected
   	def identify
   		unless session[:user_id] != nil 
-  			render json: {code: 3001}
+  			render json: {code: 3001, msg: "请先登录"}
   		end
   	end
 

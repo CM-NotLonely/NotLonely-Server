@@ -8,9 +8,9 @@ class SessionController < ApplicationController
 			@user.cache_key
 			@user.write_cache
 			session[:user_id] = @user.id
-			render json: {code: 0, user: @user}
+			render json: {code: 0, msg: "登录成功", user: @user}
 		else
-			render json: {code: 3001}
+			render json: {code: 3001, msg: "用户名或者密码错误"}
 		end
 	end
 	
@@ -19,7 +19,7 @@ class SessionController < ApplicationController
 		@user = User.find_by(id: session[:user_id])
 		@user.cache_delete
 		session[:user_id] = nil
-		render json: {code: 0}
+		render json: {code: 0, msg: "成功退出"}
 	end
 	#设置参数白名单。
 	private
