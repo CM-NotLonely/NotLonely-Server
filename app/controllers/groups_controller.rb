@@ -116,7 +116,7 @@ class GroupsController < ApplicationController
 			return render json: {code: 3001, msg: '显示赞数高的前十个圈子失败，因为圈子为空'}
 		end
 		groups=(Group.order 'likes_count DESC').limit(10)
-		render json: {groups: groups}
+		render json: {code: 0, groups: groups}
 	end
 
 	private
