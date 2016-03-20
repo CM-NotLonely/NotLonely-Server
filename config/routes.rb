@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     match '/activities/:activity_id/likes', to: 'likes#create', via: 'post' # added by msl
     match '/activities/:activity_id/likes', to: 'likes#destroy', via: 'delete' # added by msl
     match '/top10_groups', to: 'groups#index3', via: 'get' # added by msl
+    match '/top10_activities', to: 'activities#index2', via: 'get' # added by msl
 
     post 'follow/create/:user_followed_id' => 'follow#create'
     get 'follow/destroy/:id' => 'follow#destroy' 
