@@ -54,7 +54,7 @@ class ActivitiesController < ApplicationController
 				render json: {code: 3001, msg: '更新失败'}
 			end
 		else
-			render json: {code: 3001, msh: '非本人没有权限修改该用户资料'}
+			render json: {code: 3002, msg: '非本人没有权限修改该用户资料'}
 		end
 	end
 
