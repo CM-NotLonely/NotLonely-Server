@@ -1,6 +1,6 @@
 # Notlonely Server
 
-> 我们用的最新版 Rails 4.2.5.1 进行编译并运行。
+> 我们用的最新版 Ruby 2.3.0 Rails 4.2.5.1 进行编译并运行。
 
 ## Intro
 
