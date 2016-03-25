@@ -63,60 +63,13 @@ class GroupsController < ApplicationController
 		end
 	end
 
-	%>
-	#显示赞数高的前十个圈子，优化了点性能
-	def index3
-		count=Group.count
-		like_counts=Array.new(0, count)
-		groupss=Group.all
-		if groupss.empty?
-			return render json: {code: 3001, msg: '显示赞数高的前十个圈子失败，因为圈子为空'}
-		end
-		for i in 1..count
-			num=0
-			groupss.find(i).activities.all.each do |a|
-				num+=a.likes.count
-			end
-			like_counts[i]=num
-		end
-
-		temp=Array.new like_counts
-
-		t=0
-		for i in 1..count-1
-			for j in 1..count-i-1
-				if like_counts[j]<like_counts[j+1]
-					t=like_counts[j]
-					like_counts[j]=like_counts[j+1]
-					like_counts[j+1]=t
-				end
-			end
-		end
-
-		groups=[]
-		for i in 1..count
-			for j in 1..count
-				if like_counts[i]==temp[j]
-					temp[j]=-1
-					break
-				end
-			end
-			group=groupss.find(j)
-			groups[i]=group
-		end
-		groups=groups.first 10
-
-		render json: {groups: groups}
-	end
-	%>
-
 	#显示赞数高的前十个圈子，强力优化性能
 	def index3
 		if Group.all.empty?
 			return render json: {code: 3001, msg: '显示赞数高的前十个圈子失败，因为圈子为空'}
 		end
 		groups=(Group.order 'likes_count DESC').limit(10)
-		render json: {groups: groups}
+		render json: {code: 0, groups: groups}
 	end
 
 	private
