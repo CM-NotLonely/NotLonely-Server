@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     match '/top10_activities', to: 'activities#index2', via: 'get' # added by msl
 
     post 'follow/create/:user_followed_id' => 'follow#create'
-    get 'follow/destroy/:id' => 'follow#destroy' 
+    delete 'follow/destroy/:id' => 'follow#destroy' 
     get 'follow/index' => 'follow#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
