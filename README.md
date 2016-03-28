@@ -1,6 +1,6 @@
-# Notlonely iOS
+# Notlonely Server
 
-> We build in Cocoapods（version 0.39.0）Swift2.2 and Xcode 7.3.
+> We build in Ruby 2.3.0 Rails 4.2.5.1.
 
 # Notlonely iOS
 ---
@@ -31,4 +31,4 @@ Hope you join us if you are also interested~
 
 MIT
 
-## [中文介绍](https://github.com/CM-NotLonely/NotLonely-iOS/blob/master/README_Chinese.md)
+## [中文介绍](https://github.com/CM-NotLonely/NotLonely-Server/blob/master/README_Chinese.md)
