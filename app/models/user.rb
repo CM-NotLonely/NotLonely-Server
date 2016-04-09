@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+	has_secure_password
+	attr_accessor :status
+
 	has_many :groups
 	has_many :activities
 	has_many :activity_applies
@@ -8,31 +11,38 @@ class User < ActiveRecord::Base
 	has_many :user_follows, :class_name => 'Follow', :foreign_key => 'user_follow_id'
 	has_many :user_followeds, :class_name => 'Follow', :foreign_key => 'user_followed_id'
 	has_many :group_inviteds, :class_name => 'Group', :foreign_key => 'group_invited_id'
+
 	mount_uploader :avatar, AvatarUploader
-	#设置用户表中的数据要求。
-	validates :username, uniqueness: true, length: { in: 5..10 }
-	validates :password, length: { minimum: 6 }
 
-	# 增添回调，当更新用户时生成cache，登录后，生成cache，退出后删除cache。
+	validates :username, uniqueness: {is: true, message: " is already present => 用户已存在", on: :create}
+	validates :username, length: { minimum: 10 , message: "minimum is 10 => 用户名最小长度为10"}
+	validates :password, length: { minimum: 8 , message: "minimum is 8 => 密码最小长度为8"}, confirmation: true, if: :status? 
+
 	before_destroy :cache_delete
+	before_update :cache_delete
+	before_save :cache_delete
+	after_update :write_cache
+	after_find do |u|
+		u.write_cache unless $cache.get("User/#{u.id}")
+	end
 
-	after_update :cache_delete, :write_cache, :cache_key
+		def status?
+			self.status == 0
+		end
+
+		def self.authenticate(params_user)
+			@user = find_by_username(params_user[:username]).try(:authenticate, params_user[:password])
+		end
 
 		def cache_key
-			"User/#{self.id}/#{self.updated_at.to_i}"
+			"User/#{self.id}"
 		end
 
 		def write_cache
-			Rails.cache.fetch(:cache_key) do
-				self
-			end
-		end
-
-		def self.read_cache
-			Rails.cache.fetch(:cache_key)
+			$cache.set(cache_key,self)
 		end
 
 		def cache_delete
-			Rails.cache.delete(:cache_key)
+			$cache.delete(cache_key)
 		end
 end

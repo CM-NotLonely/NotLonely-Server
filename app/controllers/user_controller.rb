@@ -1,46 +1,47 @@
 class UserController < ApplicationController
-	#注册账户的动作跳过过滤器。
-	skip_before_action :identify, only: [:create]
-	# #设置前置过滤器，首先确定user。
-	before_action :set_user, only: [:show, :update]
+	skip_before_action :identify, only: [:create, :show]
+	
 	def create
 		@user = User.new(params_user)
-		@user.avatar = params[:file]
-			if @user.save
-				render json: {code: 0, msg: "注册成功。", user: @user}
-			else
-				render json: {code: 3001, msg: "此用户已存在或只能上传jpg/png等格式的头像。"}
-			end
+		render json: {code: 0, msg: "Successfully Sign Up => 注册成功。"} if @user.save!
+	rescue
+		 	render json: {code: 3001, msg: @user.errors.full_messages}
 	end
 
 	def show
-		if @user
-		    render json: {code: 0, user: @user}
-		else
-			render json: {code: 3001}
-		end
+		render json: {code: 0, user: @user} if @user = User.find(params[:id]).as_json(except: [:id, :username, :password_digest, :created_at, :updated_at])
+	rescue
+		render json: {code: 3001, msg: "This user can't be found => 无法找到该用户"}
 	end
 
 	def update
-		@user.avatar = params[:file]
-		if @user.update(params_user_need)
-			render json: {code: 0, msg: "更改个人信息成功", user: @user}
-		else
-			render json: {code: 3001, msg: "更改个人信息失败,"}
-		end
+		render json: {code: 0, msg: "Successfully Updated => 更改个人信息成功"} if User.find(session[:user_id]).update!(params_user_need) #.as_json(except: [:id, :created_at, :updated_at, :username, :password_digest])
+	rescue
+		render json: {code: 3001, msg: "Updated Faily => 更改个人信息失败"}
+	end
+
+	def update_head_image
+		render json: {code: 0, msg: "Successfully Updated => 更改个人头像成功"} if User.find(session[:user_id]).update!(avatar_params)
+	rescue
+		render json: {code: 3001, msg: "Updated Faily => 更改个人头像失败"}
+	end
+
+	def show_oneself
+		render json: {code: 0, user: current_user}
 	end
 
 	private
 		def params_user
-			params.permit(:username, :password, :nickname, :sex, :introduction, :avatar)
+			params.permit(:username, :password, :password_confirmation, :nickname, :sex, :introduction, :avatar, :status)
 		end
 
 		def params_user_need
-			params.permit(:password, :nickname, :sex, :introduction, :avatar)
+			params.permit(:nickname, :sex, :introduction, :status)
 		end
 
-		 def set_user
-			@user = User.read_cache	
-		 end
+		def avatar_params
+			params.permit(:avatar, :status)
+		end
+
 end
 
