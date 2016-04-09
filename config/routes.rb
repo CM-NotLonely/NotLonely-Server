@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
     get 'show/:id' => 'user#show'
     post 'register' => 'user#create'
-    patch 'update' => 'user#update'
     get 'show_my_information' => 'user#show_oneself'
     post 'login' => 'session#create'
     delete 'sign_out' => 'session#destroy'
+    patch 'update_head_image' => 'user#update_head_image'
+    patch 'update_password' => 'user#update_password'
+    patch 'update' => 'user#update'
 
     resources :groups do # added by msl
       resources :activities do # added by msl

@@ -15,15 +15,21 @@ class UserController < ApplicationController
 	end
 
 	def update
-		render json: {code: 0, msg: "Successfully Updated => 更改个人信息成功"} if User.find(session[:user_id]).update!(params_user_need) #.as_json(except: [:id, :created_at, :updated_at, :username, :password_digest])
+		render json: {code: 0, msg: "Successfully Update Personal Information => 更改个人信息成功"} if User.find(session[:user_id]).update!(params_user_need) #.as_json(except: [:id, :created_at, :updated_at, :username, :password_digest])
 	rescue
-		render json: {code: 3001, msg: "Updated Faily => 更改个人信息失败"}
+		render json: {code: 3001, msg: "Update Personal Information Faily => 更改个人信息失败"}
 	end
 
 	def update_head_image
-		render json: {code: 0, msg: "Successfully Updated => 更改个人头像成功"} if User.find(session[:user_id]).update!(avatar_params)
+		render json: {code: 0, msg: "Successfully Update HeadImage => 更改个人头像成功"} if User.find(session[:user_id]).update!(avatar_params)
 	rescue
-		render json: {code: 3001, msg: "Updated Faily => 更改个人头像失败"}
+		render json: {code: 3001, msg: "Update HeadImage Faily => 更改个人头像失败"}
+	end
+
+	def update_password
+		render json: {code: 0, msg: "Successfully Update Password => 更改密码成功"} if User.find(session[:user_id]).update!(password_params)
+	rescue
+		render json: {code: 3001, msg: "Update Password Faily => 更改密码失败"}
 	end
 
 	def show_oneself
@@ -41,6 +47,10 @@ class UserController < ApplicationController
 
 		def avatar_params
 			params.permit(:avatar, :status)
+		end
+
+		def password_params
+			params.permit(:password, :password_confirmation, :status)
 		end
 
 end
