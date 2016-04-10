@@ -2,7 +2,7 @@ class SessionController < ApplicationController
 	skip_before_action :identify, only: [:create]
 
 	def create
-		if @user = User.authenticate(params_user)
+		if @user = User.authenticate(params_user) 
 			session[:user_id] = @user.id
 			render json: {code: 0, msg: "Successfully Login => 登录成功", user: @user.as_json(except: [:id, :created_at, :updated_at, :password_digest, :username])}
 		else 
