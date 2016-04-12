@@ -3,7 +3,7 @@ class UserController < ApplicationController
 	
 	def create
 		@user = User.new(params_user)
-		render json: {code: 0, msg: "Successfully Sign Up => 注册成功。"} if @user.save!
+		render json: {code: 0, msg: "注册成功。"} if @user.save!
 	rescue
 		 	render json: {code: 3001, msg: @user.errors.full_messages}
 	end
@@ -11,24 +11,24 @@ class UserController < ApplicationController
 	def show
 		render json: {code: 0, user: @user} if @user = User.find(params[:id]).as_json(except: [:id, :username, :password_digest, :created_at, :updated_at])
 	rescue
-		render json: {code: 3001, msg: "This user can't be found => 无法找到该用户"}
+		render json: {code: 3001, msg: "无法找到该用户"}
 	end
 
 	def update
-		render json: {code: 0, msg: "Successfully Update Personal Information => 更改个人信息成功"} if User.find(session[:user_id]).update!(params_user_need) #.as_json(except: [:id, :created_at, :updated_at, :username, :password_digest])
+		render json: {code: 0, msg: "更改个人信息成功"} if User.find(session[:user_id]).update!(params_user_need) #.as_json(except: [:id, :created_at, :updated_at, :username, :password_digest])
 	rescue 
-		render json: {code: 3001, msg: "Update Personal Information Faily => 更改个人信息失败\n#{e.full_messages}"}
+		render json: {code: 3001, msg: "更改个人信息失败"}
 	end
 
 	def update_head_image
-		render json: {code: 0, msg: "Successfully Update HeadImage => 更改个人头像成功"} if User.find(session[:user_id]).update!(avatar_params)
+		render json: {code: 0, msg: "更改个人头像成功"} if User.find(session[:user_id]).update!(avatar_params)
 	rescue
-		render json: {code: 3001, msg: "Update HeadImage Faily => 更改个人头像失败,Only Allow Jpg,Jpeg,Gif And Png => 只允许Jpg,Jpeg,Gif,Png格式的图片"}
+		render json: {code: 3001, msg: "更改个人头像失败,只允许Jpg,Jpeg,Gif,Png格式的图片"}
 	end
 
 	def update_password
 		@user = User.find(session[:user_id])
-		render json: {code: 0, msg: "Successfully Update Password => 更改密码成功"} if @user.update!(password_params)
+		render json: {code: 0, msg: "更改密码成功"} if @user.update!(password_params)
 	rescue 
 		render json: {code: 3001, msg: @user.errors.full_messages}
 	end

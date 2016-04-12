@@ -14,9 +14,9 @@ class User < ActiveRecord::Base
 
 	mount_uploader :avatar, AvatarUploader
 
-	validates :username, uniqueness: {is: true, message: " is already present => 用户已存在", on: :create}
-	validates :username, length: { minimum: 10 , message: "minimum is 10 => 用户名最小长度为10"}
-	validates :password, length: { minimum: 8 , message: "minimum is 8 => 密码最小长度为8"}, confirmation: true, if: :status? 
+	validates :username, uniqueness: {is: true, message: "用户已存在", on: :create}
+	validates :username, length: { minimum: 8 , message: "用户名最小长度为8"}
+	validates :password, length: { minimum: 8 , message: "密码最小长度为8"}, confirmation: true, if: :status? 
 	validates :password_confirmation, presence: true, if: :status? 
 	before_destroy :cache_delete
 	before_update :cache_delete
