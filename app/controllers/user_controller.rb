@@ -22,8 +22,8 @@ class UserController < ApplicationController
 
 	def update_head_image
 		render json: {code: 0, msg: "更改个人头像成功"} if User.find(session[:user_id]).update!(avatar_params)
-	rescue
-		render json: {code: 3001, msg: "更改个人头像失败,只允许Jpg,Jpeg,Gif,Png格式的图片"}
+	# rescue
+	# 	render json: {code: 3001, msg: "更改个人头像失败,只允许Jpg,Jpeg,Gif,Png格式的图片"}
 	end
 
 	def update_password
@@ -39,19 +39,23 @@ class UserController < ApplicationController
 
 	private
 		def params_user
-			params.permit(:username, :password, :password_confirmation, :nickname, :sex, :introduction, :avatar, :status)
+			params.permit(:username, :password, :password_confirmation, :nickname, :sex, :introduction, :avatar)
 		end
 
 		def params_user_need
-			params.permit(:nickname, :sex, :introduction, :status)
+			paramsd = params.permit(:nickname, :sex, :introduction, :status)
+			paramsd[:status] = 0
+			paramsd
 		end
 
 		def avatar_params
-			params.permit(:avatar, :status)
+			paramsd = params.permit(:avatar, :status)
+			paramsd[:status] = 0
+			paramsd
 		end
 
 		def password_params
-			params.permit(:password, :password_confirmation, :status)
+			params.permit(:password, :password_confirmation)
 		end
 
 end
