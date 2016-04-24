@@ -1,10 +1,9 @@
 class ActivitiesController < ApplicationController
 	#在某个圈子里面创建活动。
 	def create
-		@user = User.read_cache
-		@group = Group.find(params[:group_id])
-		@activity = @group.activities.new(activity_params) # this line can be better!
-		@activity.user_id = @user.id
+		@activity = Activity.new(activity_params)
+    @activity.group_id = params[:group_id]
+		@activity.user_id = session[:user_id]
 		if @activity.save
 			render json: {code: 0, activity: @activity}
 		else
@@ -24,8 +23,7 @@ class ActivitiesController < ApplicationController
 	
 	#查看指定圈子里的所有活动。
 	def index
-		@group = Group.find(params[:group_id])
-		@activities = @group.activities
+		@activities = Activity.where(group_id: params[group_id])
 		if @activities
 			render json: {code: 0, activities: @activities}
 		else
@@ -38,7 +36,7 @@ class ActivitiesController < ApplicationController
 		@activity = Activity.find(params[:id])
 		if @activity.user_id == session[:user_id]
 			@activity.destroy
-			render json: {code: 0}
+			render json: {code: 0, msg: '删除成功'}
 		else
 			render json: {code: 3001, msg: '删除该活动失败'}
 		end
@@ -54,17 +52,14 @@ class ActivitiesController < ApplicationController
 				render json: {code: 3001, msg: '更新失败'}
 			end
 		else
-			render json: {code: 3002, msg: '非本人没有权限修改该用户资料'}
+			render json: {code: 3001, msg: '非本人没有权限修改该用户资料'}
 		end
 	end
 
 	#显示赞数前10的活动
 	def index2
-		if Activity.all.empty?
-			return render json: {code: 3001, msg: '活动为空'}
-		end
-		activities=(Activity.order 'likes_count DESC').limit 10
-		render json: {code: 0, activities: activities}
+		@activities = Activity.order('likes_count DESC').limit(10)
+		render json: {code: 0, activities: @activities}
 	end
 
 	private

@@ -13,10 +13,11 @@ Rails.application.routes.draw do
     patch 'update' => 'user#update'
 
     resources :groups do # added by msl
-      resources :activities do # added by msl
-        resources :likes # added by msl
-      end # added by msl
-    end # added by msl
+      resources :activities do
+        resources :likes do
+        end
+      end
+    end
 
     resources :group_apply do
       member do

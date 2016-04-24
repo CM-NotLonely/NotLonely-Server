@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   protected
   	def identify
-  		render json: {code: 3001, msg: "Please Login Firstly => 请先登录"} unless session[:user_id] #&& current_user
+  		render json: {code: 3001, msg: "请先登录"} unless session[:user_id] #&& current_user
   	end
 
 end
