@@ -1,12 +1,10 @@
 class FollowController < ApplicationController
-	# 设置前过滤器。
-	before_action :set_user
 	# 关注。
 	def create
-		@follow = Follow.new
-		@follow.user_follow_id = @user.id
-		@follow.user_followed_id = params[:user_followed_id]
-		if @follow.save
+		#@follow = Follow.new
+		#@follow.user_follow_id = @user.id
+		#@follow.user_followed_id = params[:user_followed_id]
+		if @follow = Follow.create(user_follow_id: session[:user_id], user_followed_id: params[:user_followed_id])
 			render json: {code: 0, msg: "关注成功", follow: @follow}		
 		else
 			render json: {code: 3001, msg: "关注失败，可能是对方设置了禁止关注"}		
@@ -37,9 +35,4 @@ class FollowController < ApplicationController
 			render json: {code: 3001, msg: "你的关注人清单是0哦"}
 		end
 	end
-
-	private
-		def set_user
-			@user = User.read_cache
-		end
 end

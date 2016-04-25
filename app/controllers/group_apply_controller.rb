@@ -1,13 +1,15 @@
 class GroupApplyController < ApplicationController
-	#设置过滤器找到group_applies.
-	before_action :set_group_applies, only: [:index, :sub_index]
 	# 登录用户申请加入某个指定的圈子。
 	def create
-		@group_apply = GroupApply.new(params_group_apply) 
-		@group_apply.user_id = session[:user_id]
-		@group_apply.isagree = 0
-		@group_apply.save
-		render json: {code: 0, msg: "申请成功，等待对方回复中", group_apply: @group_apply}
+		#@group_apply = GroupApply.new(params_group_apply) 
+		#@group_apply.user_id = session[:user_id]
+		#@group_apply.isagree = 0
+		#@group_apply.save
+		if @group_apply = GroupApply.create(params_group_apply, user_id: session[:user_id], isagree: 0)
+      render json: {code: 0, msg: "申请成功，等待对方回复中", group_apply: @group_apply}
+    else
+      render json: {code: 3001, msg: @group_apply.error.full_messages}
+    end
 	end
 
 	# 返回登录用户的所有被申请加入的圈子的列表。
@@ -31,7 +33,7 @@ class GroupApplyController < ApplicationController
 				render json: {code: 3001, msg: "回复失败，可能是你没有明确回复是否同意"}
 			end
 		else
-			render json: {code: 3001, msg: "孩子，不要再迷失方向了"}
+			render json: {code: 3001, msg: "权限不足，无法访问"}
 		end
 	end
 
@@ -64,9 +66,5 @@ class GroupApplyController < ApplicationController
 
 		def params_isagree
 			params.permit(:isagree, :id)
-		end
-
-		def set_group_applies
-			@user = User.read_cache
 		end
 end
