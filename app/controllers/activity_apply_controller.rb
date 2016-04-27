@@ -1,11 +1,13 @@
 class ActivityApplyController < ApplicationController
-	# 生成一个新的待回复的活动申请。
+	
+  # 生成一个新的待回复的活动申请。
 	def create
-		#@activity_apply = ActivityApply.new(params_activity_apply) 
-		#@activity_apply.user_id = session[:user_id]
-		#@activity_apply.isagree = 0
-		if @activity_apply = ActivityApply.create(params_activity_apply, user_id: session[:user_id], isagree: 0)
-		  render json: {code: 0, msg: "申请成功，等待对方回复", activity_apply: @activity_apply}
+		@activity_apply = ActivityApply.create(params_activity_apply) do |A|
+                        A.user_id = session[:user_id]
+                        A.isagree = 0 
+                      end
+		if @activity_apply
+      render json: {code: 0, msg: "申请成功，等待对方回复", activity_apply: @activity_apply.exp(:created_at, :updated_at)}
     else
       render json: {cpde: 3001, msg: @activity_apply.error.full_messages}
   end

@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
+  include ActionController::Live
   # protect_from_forgery with: :exception
-  #增加控制器的过滤器，只有当建立session后，才允许执行敏感动作。
   before_action :identify
 
   helper_method :current_user
@@ -15,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   protected
   	def identify
-  		render json: {code: 3001, msg: "请先登录"} unless session[:user_id] #&& current_user
+  		render json: {code: 3001, msg: "请先登录"} unless session[:user_id]
   	end
 
 end

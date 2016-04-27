@@ -1,10 +1,7 @@
 class GroupApplyController < ApplicationController
+
 	# 登录用户申请加入某个指定的圈子。
 	def create
-		#@group_apply = GroupApply.new(params_group_apply) 
-		#@group_apply.user_id = session[:user_id]
-		#@group_apply.isagree = 0
-		#@group_apply.save
 		if @group_apply = GroupApply.create(params_group_apply, user_id: session[:user_id], isagree: 0)
       render json: {code: 0, msg: "申请成功，等待对方回复中", group_apply: @group_apply}
     else

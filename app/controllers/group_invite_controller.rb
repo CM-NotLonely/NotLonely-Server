@@ -2,10 +2,6 @@ class GroupInviteController < ApplicationController
 	
   # 登录用户申请邀请某人加入某个指定的圈子。
 	def create
-	#	@group_invite = GroupInvite.new(params_group_invite) 
-	#	@group_invite.group_id = params[:group_id]
-	#	@group_invite.user_invited_id = params[:user_invited_id]
-	#	@group_invite.isagree
 		if @group_invite.create(params_group_invite, group_id: params[:group_id], user_invited_id: params[:user_invited_id], isagree: 0)
 		  render json: {code: 0, msg: "申请发送成功", group_invite: @group_invite}
     else
