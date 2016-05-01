@@ -1,16 +1,19 @@
 class UserController < ApplicationController
 	skip_before_action :identify, only: [:create, :show]
-	
+	before_action :judge!, only: [:create]
 	def create
 		@user = User.new(params_user)
 		render json: {code: 0, msg: "注册成功。"} if @user.save!
 	rescue
-		 	render json: {code: 3001, msg: @user.errors.full_messages}
+    render json: {code: 3001, msg: "该用户名已存在"}
 	end
 
 	def show
-		render json: {code: 0, user: @user} if @user = User.find(params[:id]).as_json(except: [:id, :username, :password_digest, :created_at, :updated_at])
-	rescue
+    @user = User.select(:id, :nickname, :sex, :introduction, :avatar).where(id: params[:id]).take
+    user = @user.as_json(except: :avatar)
+    user[:avatar] = @user.avatar.url
+		render json: {code: 0, user: user}
+  rescue
 		render json: {code: 3001, msg: "无法找到该用户"}
 	end
 
@@ -38,6 +41,13 @@ class UserController < ApplicationController
 	end
 
 	private
+    
+  def judge!
+    if params_user[:password].nil? || params_user[:password] != params_user[:password_confirmation] || params_user[:password].length < 6
+      render json: {code: 3001, msg: "您所填写的信息有误"}
+    end
+  end
+    
 		def params_user
 			params.permit(:username, :password, :password_confirmation, :nickname, :sex, :introduction, :avatar)
 		end

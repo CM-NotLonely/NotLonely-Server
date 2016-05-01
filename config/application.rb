@@ -8,6 +8,7 @@ require "active_record/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "sprockets/railtie"
+#require 'carrierwave/orm/activerecord'
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems

@@ -18,7 +18,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   def default_url  #可以定义默认图片，如过用户没有上传图片，则可以使用默认的图片
-    "avatar/#{version_name}.png"
+    "avatar/default.png"
   end
 
 

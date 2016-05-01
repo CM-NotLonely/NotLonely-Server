@@ -58,6 +58,10 @@ class ActivitiesController < ApplicationController
       render json: {code: 3001, msg: '尚未存在活动，赶紧成为创建活动第一人吧'}
     end
 	end
+  
+  def avatar_send
+    response.headers['X-Accel-Redirect'] = "/uploads/" + params[:path]
+  end
 
 	private
 	def activity_params
