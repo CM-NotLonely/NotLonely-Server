@@ -4,8 +4,8 @@ class UserController < ApplicationController
 	def create
 		@user = User.new(params_user)
 		render json: {code: 0, msg: "注册成功。"} if @user.save!
-  # rescue
-  #     render json: {code: 3001, msg: "该用户名已存在"}
+  rescue
+      render json: {code: 3001, msg: "该用户名已存在"}
 	end
 
 	def show
