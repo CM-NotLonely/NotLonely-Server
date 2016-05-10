@@ -4,8 +4,8 @@ class SessionController < ApplicationController
 	def create
 		if @user = User.authenticate(params_user) 
 			session[:user_id] = @user.id
-      user = @user.as_json(except: [:id, :created_at, :updated_at, :password_digest, :username, :avatar])
-      user[:avatar] = "uploads/user/" + @user.avatar.url
+      user = @user.as_json(except: [:id, :created_at, :updated_at, :password_digest, :username])
+      user[:url] = user.delete(:avatar).url
 			render json: {code: 0, msg: "登录成功", user: user}
 		else 
 			render json: {code: 3001, msg: "用户名或者密码错误"}

@@ -39,7 +39,9 @@ class User < ActiveRecord::Base
 		end
 
 		def write_cache
-			$cache.set(cache_key,self)
+      params = self.as_json(except: [:id, :username, :password_digest, :created_at, :updated_at])
+      params["url"] = params.delete("avatar")["url"]
+			$cache.set(cache_key, params)
 		end
 
 		def cache_delete

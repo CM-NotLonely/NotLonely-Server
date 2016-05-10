@@ -6,7 +6,14 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-      ($cache.get("User/#{session[:user_id]}") || User.find(session[:user_id])).as_json(except: [:id, :username, :password_digest, :created_at, :updated_at])
+      if user = $cache.get("User/#{session[:user_id]}")
+        user
+      else
+        @user = @user = User.select(:id, :nickname, :sex, :introduction, :avatar).find_by_id(params[:id])
+        user = @user.as_json()
+        user["url"] = user.delete("avatar")["url"]
+        user
+      end
     rescue
       false
   end

@@ -10,21 +10,23 @@ class UserController < ApplicationController
 
 	def show
     @user = User.select(:id, :nickname, :sex, :introduction, :avatar).where(id: params[:id]).take
-    user = @user.as_json(except: :avatar)
-    user[:avatar] = @user.avatar.url
+    user = @user.as_json()
+    user["url"] = user.delete("avatar")["url"]
 		render json: {code: 0, user: user}
   rescue
 		render json: {code: 3001, msg: "无法找到该用户"}
 	end
 
 	def update
-		render json: {code: 0, msg: "更改个人信息成功"} if User.find(session[:user_id]).update!(params_user_need)
+    @user = User.find(session[:user_id])
+		render json: {code: 0, msg: "更改个人信息成功", nickname: @user.nickname, sex: @user.sex, introduction: @user.introduction} if @user && @user.update!(params_user_need)
 	rescue 
 		render json: {code: 3001, msg: "更改个人信息失败"}
 	end
 
 	def update_head_image
-		render json: {code: 0, msg: "更改个人头像成功"} if User.find(session[:user_id]).update!(avatar_params)
+    @user = User.find(session[:user_id])
+		render json: {code: 0, msg: "更改个人头像成功", url: @user.avatar.url} if @user && @user.update!(avatar_params)
 	 rescue
 	 	render json: {code: 3001, msg: "更改个人头像失败,只允许Jpg,Jpeg,Gif,Png格式的图片"}
 	end

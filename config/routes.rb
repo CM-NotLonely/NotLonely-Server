@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     patch 'update_password' => 'user#update_password'
     patch 'update' => 'user#update'
 
-    resources :groups do # added by msl
+    resources :groups do 
       resources :activities do
         resources :likes do
         end
@@ -35,11 +35,11 @@ Rails.application.routes.draw do
       end
     end
 
-    match '/group', to: 'groups#index2', via: 'get' # added by msl
-    match '/activities/:activity_id/likes', to: 'likes#create', via: 'post' # added by msl
-    match '/activities/:activity_id/likes', to: 'likes#destroy', via: 'delete' # added by msl
-    match '/top10_groups', to: 'groups#index3', via: 'get' # added by msl
-    match '/top10_activities', to: 'activities#index2', via: 'get' # added by msl
+    match '/group', to: 'groups#index2', via: 'get' 
+    match '/activities/:activity_id/likes', to: 'likes#create', via: 'post' 
+    match '/activities/:activity_id/likes', to: 'likes#destroy', via: 'delete'
+    match '/top10_groups', to: 'groups#index3', via: 'get' 
+    match '/top10_activities', to: 'activities#index2', via: 'get' 
 
     post 'follow/create/:user_followed_id' => 'follow#create'
     delete 'follow/destroy/:id' => 'follow#destroy' 
