@@ -18,9 +18,6 @@ class User < ActiveRecord::Base
 	validates :username, length: { minimum: 6 }
 	validates :password, length: { minimum: 6 }, confirmation: true, if: :status? 
 	validates :password_confirmation, presence: true, if: :status? 
-	before_destroy :cache_delete
-	before_update :cache_delete
-	before_save :cache_delete
 	after_update :write_cache
 	after_find do |u|
 		u.write_cache unless $cache.get("User/#{u.id}/#{u.updated_at.to_i}")
