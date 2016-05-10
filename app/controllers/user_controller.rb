@@ -19,21 +19,21 @@ class UserController < ApplicationController
 
 	def update
     @user = User.find(session[:user_id])
-		render json: {code: 0, msg: "更改个人信息成功", nickname: @user.nickname, sex: @user.sex, introduction: @user.introduction} if @user && @user.update!(params_user_need)
+		render json: {code: 0, msg: "更改个人信息成功", nickname: @user.nickname, sex: @user.sex, introduction: @user.introduction} if @user && @user.update!(params_user_need) && session[:user_updated_at] = @user.updated_at
 	rescue 
 		render json: {code: 3001, msg: "更改个人信息失败"}
 	end
 
 	def update_head_image
     @user = User.find(session[:user_id])
-		render json: {code: 0, msg: "更改个人头像成功", url: @user.avatar.url} if @user && @user.update!(avatar_params)
+		render json: {code: 0, msg: "更改个人头像成功", url: @user.avatar.url} if @user && @user.update!(avatar_params) && session[:user_updated_at] = @user.updated_at
 	 rescue
 	 	render json: {code: 3001, msg: "更改个人头像失败,只允许Jpg,Jpeg,Gif,Png格式的图片"}
 	end
 
 	def update_password
 		@user = User.find(session[:user_id])
-		render json: {code: 0, msg: "更改密码成功"} if @user.update!(password_params)
+		render json: {code: 0, msg: "更改密码成功"} if @user.update!(password_params) && session[:user_updated_at] = @user.updated_at
 	rescue 
 		render json: {code: 3001, msg: @user.errors.full_messages}
 	end

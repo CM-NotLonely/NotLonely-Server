@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-      if user = $cache.get("User/#{session[:user_id]}")
+      if user = $cache.get("User/#{session[:user_id]}/#{session[:user_updated_at]}")
         user
       else
         @user = @user = User.select(:id, :nickname, :sex, :introduction, :avatar).find_by_id(params[:id])

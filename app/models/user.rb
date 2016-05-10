@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 	before_save :cache_delete
 	after_update :write_cache
 	after_find do |u|
-		u.write_cache unless $cache.get("User/#{u.id}")
+		u.write_cache unless $cache.get("User/#{u.id}/#{u.updated_at.to_i}")
 	end
 
 		def status?
@@ -35,16 +35,12 @@ class User < ActiveRecord::Base
 		end
 
 		def cache_key
-			"User/#{self.id}"
+			"User/#{self.id}//#{self.updated_at.to_i}"
 		end
 
 		def write_cache
       params = self.as_json(except: [:id, :username, :password_digest, :created_at, :updated_at])
       params["url"] = params.delete("avatar")["url"]
 			$cache.set(cache_key, params)
-		end
-
-		def cache_delete
-			$cache.delete(cache_key)
 		end
 end

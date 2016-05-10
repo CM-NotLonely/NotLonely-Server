@@ -4,6 +4,7 @@ class SessionController < ApplicationController
 	def create
 		if @user = User.authenticate(params_user) 
 			session[:user_id] = @user.id
+      session[:user_updated_at] = @user.updated_at.to_i
       user = @user.as_json(except: [:id, :created_at, :updated_at, :password_digest, :username])
       user[:url] = user.delete(:avatar).url
 			render json: {code: 0, msg: "登录成功", user: user}
