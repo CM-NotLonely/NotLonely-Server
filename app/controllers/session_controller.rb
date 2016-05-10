@@ -6,11 +6,11 @@ class SessionController < ApplicationController
 			session[:user_id] = @user.id
       session[:user_updated_at] = @user.updated_at.to_i
       user = @user.as_json(except: [:id, :created_at, :updated_at, :password_digest, :username])
-      user[:url] = user.delete(:avatar).url
+      user["url"] = user.delete("avatar")["url"]
 			render json: {code: 0, msg: "登录成功", user: user}
-		else 
+    else
 			render json: {code: 3001, msg: "用户名或者密码错误"}
-		end
+    end
 	end
 	
 	def destroy
