@@ -28,7 +28,7 @@ class UserController < ApplicationController
     @user = User.find(session[:user_id])
 		render json: {code: 0, msg: "更改个人头像成功", url: @user.avatar.url} if @user && @user.update!(avatar_params) && session[:user_updated_at] = @user.updated_at
 	 rescue
-	 	render json: {code: 3001, msg: "更改个人头像失败,只允许Jpg,Jpeg,Gif,Png格式的图片"}
+	 	render json: {code: 3001, msg: "更改个人头像失败,只允许Jpg,Jpeg,Png格式的图片"}
 	end
 
 	def update_password

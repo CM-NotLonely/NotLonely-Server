@@ -14,17 +14,17 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # This is a sensible default for uploaders that are meant to be mounted:
 
   def store_dir  #定义上传到哪个文件夹下
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}/"
+    "images/#{model.class.to_s.underscore}/#{model.id}/"
   end
 
   def default_url  #可以定义默认图片，如过用户没有上传图片，则可以使用默认的图片
-    "avatar/default.png"
+    "images/defalt.png"
   end
 
 
   #指定上传文件的格式
   def extension_white_list
-    %w(jpg jpeg gif png)
+    %w(jpg jpeg png)
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

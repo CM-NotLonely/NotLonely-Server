@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
 	#已登录的用户创建新圈
 	def create
-    @group = Group.new(group_params)
+    @group = Group.new(params_group)
     @group.user_id = session[:user_id]
 		if @group.save
       render json: {code: 0, group: @group.exp(:created_at, :updated_at)}
@@ -72,4 +72,8 @@ class GroupsController < ApplicationController
 		def group_params
 			params.permit(:title, :introduction, :avatar, :id)
 		end
+    
+    def params_group
+      params.permit(:title, :introduction, :avatar)
+    end
 end
