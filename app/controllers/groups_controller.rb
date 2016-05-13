@@ -10,9 +10,9 @@ class GroupsController < ApplicationController
     end
   end
 	
-	#查看所有圈子
-	def index2
-    if @groups = Group.selected!("created_at", "updated_at", "headimg", "user_id").all
+	#分页查看所有圈子
+	def all
+    if @groups = Group.selected!("created_at", "updated_at", "headimg", "user_id").limit(10).offset(10 * params[:number])
       render json: {code: 0, groups: @groups}
     else
       render json: {code: 3001, msg: '尚未存在圈子，赶快成为创建圈子第一人吧'}
@@ -48,9 +48,9 @@ class GroupsController < ApplicationController
 		end
 	end
 	
-	#查看登录用户创建的所有圈子
+	#分页查看登录用户创建的所有圈子
 	def index
-		@groups = Group.selected!("created_at", "updated_at", "headimg", "user_id").where(user_id: session[:user_id])
+		@groups = Group.selected!("created_at", "updated_at", "headimg", "user_id").where(user_id: session[:user_id]).limit(10).offset(10 * params[:number])
 		if @groups
 			render json: {code: 0, groups: @groups}
 		else
@@ -58,15 +58,16 @@ class GroupsController < ApplicationController
 		end
 	end
 
-	#显示赞数高的前十个圈子
-	def index3
-		@groups = Group.selected!("created_at", "updated_at", "headimg", "user_id").order('likes_count DESC').limit(10)
+	#分页显示赞数高的活动
+	def top
+		@groups = Group.selected!("created_at", "updated_at", "headimg", "user_id").order('likes_count DESC').limit(10).offset(10 * params[:number])
     if @groups
 		  render json: {code: 0, groups: @groups}
-    else
-      render json: {code: 3001, msg: '目前尚未有圈子'}
     end
-	end
+  rescue
+      render json: {code: 3001, msg: @groups.errors.full_message}
+	
+  end
 
 	private
 		def group_params

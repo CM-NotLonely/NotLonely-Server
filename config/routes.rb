@@ -1,21 +1,37 @@
 Rails.application.routes.draw do
   
-    get 'show/:id' => 'user#show'
-    post 'register' => 'user#create'
-    get 'show_my_information' => 'user#show_oneself'
-    post 'login' => 'session#create'
-    delete 'sign_out' => 'session#destroy'
-    
-    patch 'update_head_image' => 'user#update_head_image'
-    patch 'update_password' => 'user#update_password'
-    patch 'update' => 'user#update'
+  #/////////////////////
+  # For Users #
+    get 'users/show/:id' => 'user#show'
+    post 'users/register' => 'user#create'
+    get 'users/show_my_information' => 'user#show_oneself'
+    post 'users/login' => 'session#create'
+    delete 'users/sign_out' => 'session#destroy'
+    patch 'users/update_head_image' => 'user#update_head_image'
+    patch 'users/update_password' => 'user#update_password'
+    patch 'users/update' => 'user#update'
 
-    resources :groups do 
-      resources :activities do
-        resources :likes do
-        end
-      end
-    end
+  #///////////////////////
+  # For Groups #
+    post 'groups' => 'groups#create'
+    get 'groups/top/:number' => 'groups#top'
+    get 'groups/:number' => 'groups#index'
+    get 'groups/all/:number' => 'groups#all'
+    get 'groups/:id' => 'groups#show'
+    patch 'groups/:id' => 'groups#update'
+    delete 'groups/:id' => 'groups#destroy'
+  
+  #//////////////////////
+  # For Activities #
+    post 'groups/:group_id/activities' => 'activities#create'
+    post 'default/groups/activities' => 'activities#create_default'
+    post 'groups/all/activities' => 'activities#all' 
+    get 'groups/activities/top/:number' => 'activities#top'
+    get 'groups/:group_id/activities/:id' => 'activities#show'
+    patch 'groups/activities/:id' => 'activities#update'
+    delete 'groups/activities/:activity_id' => 'activities#destroy'
+    post 'groups/activities/:activity_id/likes' => 'likes#create'
+    delete 'groups/activities/:activity_id/likes' => 'likes#destroy'
 
     resources :group_apply do
       member do
@@ -34,15 +50,10 @@ Rails.application.routes.draw do
         get 'sub_index'
       end
     end
+     
 
-    match '/group', to: 'groups#index2', via: 'get' 
-    match '/activities/:activity_id/likes', to: 'likes#create', via: 'post' 
-    match '/activities/:activity_id/likes', to: 'likes#destroy', via: 'delete'
-    match '/top10_groups', to: 'groups#index3', via: 'get' 
-    match '/top10_activities', to: 'activities#index2', via: 'get' 
-
-    post 'follow/create/:user_followed_id' => 'follow#create'
-    delete 'follow/destroy/:id' => 'follow#destroy' 
-    get 'follow/index' => 'follow#index'
+    post 'follows/create/:user_followed_id' => 'follow#create'
+    delete 'follows/destroy/:id' => 'follow#destroy' 
+    get 'follows/index' => 'follow#index'
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512105753) do
+ActiveRecord::Schema.define(version: 20160513085608) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id"
@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(version: 20160512105753) do
   create_table "groups", force: :cascade do |t|
     t.string   "title"
     t.text     "introduction"
-    t.string   "headimg"
     t.integer  "user_id"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
