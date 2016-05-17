@@ -38,7 +38,7 @@ class ActivitiesController < ApplicationController
 	
 	#分页查看指定圈子里的所有活动。
 	def all
-		@activities = Activity.selected!("created_at", "updated_at").where(group_id: params[:group_id]).limit(10).offset(10 * params[:number])
+		@activities = Activity.selected!("created_at", "updated_at").where(group_id: params[:group_id]).limit(10).offset(10 * params[:number].to_i)
 		if @activities
 			render json: {code: 0, activities: @activities}
     end
@@ -66,7 +66,7 @@ class ActivitiesController < ApplicationController
 
 	#分页显示赞数高的活动
 	def top
-		@activities = Activity.selected!("created_at", "updated_at").order('likes_count DESC').limit(10).offset(10 * params[:number])
+		@activities = Activity.selected!("created_at", "updated_at").order('likes_count DESC').limit(10).offset(10 * params[:number].to_i)
     if @activities
       render json: {code: 0, activities: @activities}
     end
