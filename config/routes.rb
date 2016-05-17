@@ -32,7 +32,8 @@ Rails.application.routes.draw do
     delete 'groups/activities/:activity_id' => 'activities#destroy'
     post 'groups/activities/:activity_id/likes' => 'likes#create'
     delete 'groups/activities/:activity_id/likes' => 'likes#destroy'
-
+    
+    
     resources :group_apply do
       member do
         get 'sub_index'

@@ -29,7 +29,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'dalli', '~> 2.7.6'
 # 验证码!
-gem 'rucaptcha'
+ gem 'rucaptcha'
 
 # Use Unicorn as the app server
 # gem 'unicorn'

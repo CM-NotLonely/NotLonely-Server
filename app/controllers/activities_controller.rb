@@ -81,11 +81,11 @@ class ActivitiesController < ApplicationController
 
 	private
 	  def activity_params
-		  params.permit(:title, :location, :cost, :detail, :time)
+		  params.permit(:title, :location, :cost, :detail, :time, :count)
 	  end
     
     def default_params
-      params.permit(:title, :location, :cost, :detail, :time)
+      params.permit(:title, :location, :cost, :detail, :time, :count)
     end
 
 end
