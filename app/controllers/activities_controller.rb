@@ -45,7 +45,7 @@ class ActivitiesController < ApplicationController
       i = 0
       @activities.each do |a|
         a["name"] = @name[i]
-        i++
+        i += 1
       end
 			render json: {code: 0, activities: @activities}
     end
@@ -79,7 +79,7 @@ class ActivitiesController < ApplicationController
       i = 0
       @activities.each do |a|
         a["name"] = @name[i]
-        i++
+        i += 1
       end
       render json: {code: 0, activities: @activities}
     end
