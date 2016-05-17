@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   # For Activities #
     post 'groups/:group_id/activities' => 'activities#create'
     post 'default/groups/activities' => 'activities#create_default'
-    post 'groups/all/activities' => 'activities#all' 
+    post 'groups/all_activities' => 'activities#all' 
     get 'groups/activities/top/:number' => 'activities#top'
     get 'groups/:group_id/activities/:id' => 'activities#show'
     patch 'groups/activities/:id' => 'activities#update'
