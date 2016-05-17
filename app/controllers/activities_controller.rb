@@ -17,7 +17,7 @@ class ActivitiesController < ApplicationController
   def create_default
     @activity = Activity.create(default_params) do |a|
       a.user_id = session[:user_id]
-      a.group_id = 0
+      a.group_id = 1
     end
 		if @activity
 			render json: {code: 0, activity: @activity.exp(:created_at, :updated_at)}
