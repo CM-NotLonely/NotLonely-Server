@@ -30,7 +30,7 @@ class ActivitiesController < ApplicationController
 	def show
 		@activity = Activity.selected!("created_at", "updated_at").find(params[:id])
 		if @activity
-        @activity["name"] = User.where(id: @activity.user_id).pluck(:name)
+        @activity["name"] = User.where(id: @activity.user_id).pluck(:nickname)
 		    render json: {code: 0, activity: @activity}
 		else
 		    render json: {code: 3001, msg: '显示活动失败'}
@@ -41,7 +41,7 @@ class ActivitiesController < ApplicationController
 	def all
 		@activities = Activity.selected!("created_at", "updated_at").where(group_id: params[:group_id] ||= 1).limit(10).offset(10 * params[:number].to_i)
 		if @activities
-      @name = User.where(id: @activities.map { |act| act.id}).pluck(:name)
+      @name = User.where(id: @activities.map { |act| act.id}).pluck(:nickname)
       i = 0
       @activities.each do |a|
         a["name"] = @name[i]
@@ -75,7 +75,7 @@ class ActivitiesController < ApplicationController
 	def top
 		@activities = Activity.selected!("created_at", "updated_at").order('likes_count DESC').limit(10).offset(10 * params[:number].to_i)
     if @activities
-      @name = User.where(id: @activities.map { |act| act.id}).pluck(:name)
+      @name = User.where(id: @activities.map { |act| act.id}).pluck(:nickname)
       i = 0
       @activities.each do |a|
         a["name"] = @name[i]
