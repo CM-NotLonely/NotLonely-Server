@@ -41,15 +41,16 @@ class ActivitiesController < ApplicationController
 	def all
 		@activities = Activity.selected!("created_at", "updated_at").where(group_id: params[:group_id] ||= 1).limit(10).offset(10 * params[:number].to_i)
 		if @activities
-      @name = User.where(id: @activities.map { |act| act.id}).pluck(:nickname)
-      i = 0
-      @activities.each do |a|
-        a["name"] = @name[i]
-        i += 1
-      end
+      		@name = User.where(id: @activities.map { |act| act.id}).pluck(:nickname)
+      		i = 0
+      		@activities.each do |a|
+        		a["name"] = @name[i]
+        		i += 1
+      		end
 			render json: {code: 0, activities: @activities}
-    end
-  rescue
+    	end
+  		
+  		rescue
 			render json: {code:3001, msg: '显示该圈子的所有活动失败'}
 	end
 	
@@ -88,9 +89,9 @@ class ActivitiesController < ApplicationController
       render json: {code: 3001, msg: @activities.errors.full_message}
 	end
   
-  def avatar_send
-    response.headers['X-Accel-Redirect'] = "/uploads/" + params[:path]
-  end
+  # def avatar_send
+  #   response.headers['X-Accel-Redirect'] = "/uploads/" + params[:path]
+  # end
 
 	private
 	  def activity_params
